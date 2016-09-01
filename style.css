@@ -1,0 +1,40 @@
+html, body {
+  height: 100%;
+}
+
+/*body {
+  /*background: #333;*/
+  /*height: 100vh;*/
+  /*display: flex;
+  justify-content: center;
+  align-items: center;
+}*/
+
+/*.canvas {
+  width: 250px;
+  height: 250px;
+}*/
+/*
+.pixel {
+  width: 50px;
+  height: 50px;
+  float: left;
+  box-shadow: 0px 0px 1px #fff;
+}*/
+
+/*div {
+  background: #fff;
+  width: 50px;
+  height: 50px;
+  border-style: solid;
+  border-width: 2px;
+
+  box-shadow:
+    0px 50px black,
+    50px 50px black,
+    100px 50px black,
+    150px 50px black,
+    200px 50px black,
+    250px 50px black;
+}
+*/
