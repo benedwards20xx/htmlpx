@@ -6,7 +6,7 @@ var cellDim = 30;
 var grid = document.getElementById("grid");
 
 var clickCell = function() {
-  console.log("cell clicked");
+  console.log("cell clicked (" + this.row + ", " + this.col + ")");
   if (this.state == 0) {
     this.style.background = "black";
     this.style.border = "solid grey 1px";
@@ -25,6 +25,8 @@ for (var row = 0; row < numRows; row++) {
     console.log("row: " + row + ", col: " + col);
     var colDiv = document.createElement("div");
     colDiv.state = 0;
+    colDiv.row = row;
+    colDiv.col = col;
     colDiv.style.width = cellDim + "px";
     colDiv.style.height = cellDim + "px";
     colDiv.style.background = "white";
