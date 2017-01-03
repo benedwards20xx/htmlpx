@@ -44,6 +44,8 @@ var getCurrentPuzzleLayout = function() {
 var getGridPuzzleNums = function(puzzle) {
   // console.log("numCols: " + puzzle.length);
   var gridTexts = new Array();
+  var c = getColNumsFromPuzzle(puzzle);
+    console.log("gotten col nums from puz: " + row + ", " + c)
   for (var row = 0; row < puzzle.length; row++) {
     // console.log("curPuzzle[col]: "
     //   + curPuzzle[col]);
@@ -51,10 +53,15 @@ var getGridPuzzleNums = function(puzzle) {
     var r = getNumsFromGivenRow(puzzle[row]);
     // console.log("getTextFromGivenRow(puzzle[row]): " + r);
     gridTexts.push(r);
+    
+    gridTexts.push(r);
     // var givenCol = new Array();
-    // for (var col = 0; col < puzzle[row].length; col++) {
-    //   givenCol.push(puzzle[row][col]);
+    // for (var col = 0; col < puzzle.length; col++) {
+    //    var r = getNumsFromGivenCol(col, puzzle);
+    //    gridTexts.push(r);
     // }
+
+
     // console.log("givenCol: " + givenCol);
     // var c = getTextFromGivenRow(givenCol);
     // // console.log("c: " + c);
@@ -86,6 +93,34 @@ var getNumsFromGivenRow = function(row) {
     }
     // console.log("t: " + t);
     // console.log("c: " + c);
+  }
+  return t;
+}
+
+var getColNumsFromPuzzle = function(puzzle) {
+  
+  // console.log("row: " + row);
+  // console.log("row l: " + row.length);
+  // console.log("puzzle[col].length: " + puzzle[col].length);
+  var t = new Array();
+  for (var i = 0; i < puzzle.length; i++) {
+    var c = 0;
+    // console.log("puzzle[" + i + "]: ");
+    // console.log(puzzle[i]);
+    for (var j = 0; j < puzzle[i].length; j++) {
+      // console.log("puzzle[" + j + "][" + i + "]: ");
+      // console.log(puzzle[j][i]);
+      if (puzzle[j][i] == 1) {
+        c++;
+      } else {
+        if (c != null && c != 0) {
+          // t += (c + ' ');
+          // console.log(" total c " + c);
+          t.push(c);
+          c = 0;
+        }
+      }
+    }
   }
   return t;
 }
@@ -282,7 +317,7 @@ console.log("gridNums: " + gridNums);
 var rowNums = gridNums.slice(0, curPuzzle.length);
 var colNums = gridNums.slice(curPuzzle.length, gridNums.length+1);
 
-colNums = [[1], [2,2], [3], [4], [5]];
+// colNums = [[1], [2,2], [3], [4], [5]];
 console.log("rowNums: " + rowNums);
 console.log("colNums: " + colNums);
 
