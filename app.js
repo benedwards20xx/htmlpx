@@ -41,31 +41,37 @@ var getCurrentPuzzleLayout = function() {
   return curPuzzle;
 }
 
-var getGridPuzzleNums = function(puzzle) {
+var getGridPuzzleNums = function(puzzle, side) {
   // console.log("numCols: " + puzzle.length);
   var gridTexts = new Array();
-  var c = getColNumsFromPuzzle(puzzle);
-    console.log("gotten col nums from puz: " + row + ", " + c)
-  for (var row = 0; row < puzzle.length; row++) {
-    // console.log("curPuzzle[col]: "
-    //   + curPuzzle[col]);
+  if (side == "rows") {
+    for (var row = 0; row < puzzle.length; row++) {
+      // console.log("curPuzzle[col]: "
+      //   + curPuzzle[col]);
 
-    var r = getNumsFromGivenRow(puzzle[row]);
-    // console.log("getTextFromGivenRow(puzzle[row]): " + r);
-    gridTexts.push(r);
-    
-    gridTexts.push(r);
-    // var givenCol = new Array();
-    // for (var col = 0; col < puzzle.length; col++) {
-    //    var r = getNumsFromGivenCol(col, puzzle);
-    //    gridTexts.push(r);
-    // }
+      var r = getNumsFromGivenRow(puzzle[row]);
+      // console.log("getTextFromGivenRow(puzzle[row]): " + r);
+      gridTexts.push(r);
+      
+      // gridTexts.push(r);
+      // var givenCol = new Array();
+      // for (var col = 0; col < puzzle.length; col++) {
+      //    var r = getNumsFromGivenCol(col, puzzle);
+      //    gridTexts.push(r);
+      // }
 
 
-    // console.log("givenCol: " + givenCol);
-    // var c = getTextFromGivenRow(givenCol);
-    // // console.log("c: " + c);
-    // gridTexts.push(c);
+      // console.log("givenCol: " + givenCol);
+      // var c = getTextFromGivenRow(givenCol);
+      // // console.log("c: " + c);
+      // gridTexts.push(c);
+    }
+  } else if (side == "cols") {
+    var colNums = getColNumsFromPuzzle(puzzle);
+    console.log("gotten col nums from puz: " + colNums)
+    for (var col = 0; col < colNums.length; col++) {
+      gridTexts.push(colNums[col]);
+    }
   }
   return gridTexts;
 }
@@ -125,7 +131,7 @@ var getColNumsFromPuzzle = function(puzzle) {
   return t;
 }
 
-var printGrid = function(grid) {
+var debugPrintGrid = function(grid) {
   for (var row = 0; row < grid.length; row++) {
     var line = "[ ";
     for (var col = 0; col < grid[row].length; col++) {
@@ -135,6 +141,26 @@ var printGrid = function(grid) {
     console.log(line);
   }
 }
+
+var debugPrintList = function(list) {
+  for (var i = 0; i < list.length; i++) {
+    console.log(list[i]);
+  }
+}
+
+// var debugPrintNums = function(grid, side) {
+//   if (side == "rows") {
+//     console.log("rows:");
+//     for (var row = 0; row < grid.length; row++) {
+
+//     }
+//   else if (side == "cols") {
+
+//   } else (side) {
+//     debugPrintNums(grid, "rows");
+//     debugPrintNums(grid, "cols")
+//   }
+// }
 
 var clickCell = function(e) {
   // console.log("cell clicked (" + this.row + ", " + this.col + ")");
@@ -268,7 +294,23 @@ var initRowInfo = function(rowInfo, rowTexts) {
   for (var row = 0; row < rowTexts.length; row++) {
     var infoDiv = document.createElement("inforowdiv" + row);
     console.log("rowTexts[row]: " + rowTexts[row]);
-    infoDiv.innerHTML = rowTexts[row];
+    // infoDiv.innerHTML = rowTexts[row];
+    // infoDiv.style.width = cellDim + "px";
+    // infoDiv.style.height = cellDim + "px";
+    // infoDiv.style.background = "white";
+    // infoDiv.style.color = "black";
+    // infoDiv.style.border = "solid black 1px";
+    // infoDiv.style.textAlign = "center";
+    // // infoDiv.style.display = "inline-block";
+    // rowInfo.appendChild(infoDiv);
+  }
+}
+
+var initColInfo = function(colInfo, colTexts) {
+  for (var col = 0; col < colTexts.length; col++) {
+    var infoDiv = document.createElement("inforowdiv" + col);
+    console.log("colTexts[col]: " + rowTexts[col]);
+    infoDiv.innerHTML = colTexts[col];
     infoDiv.style.width = cellDim + "px";
     infoDiv.style.height = cellDim + "px";
     infoDiv.style.background = "white";
@@ -278,13 +320,6 @@ var initRowInfo = function(rowInfo, rowTexts) {
     // infoDiv.style.display = "inline-block";
     rowInfo.appendChild(infoDiv);
   }
-}
-
-var initColInfo = function(colInfo, colTexts) {
-  for (var col = 0; col < numCols; col++) {
-    
-  }
-  
 }
 
 // document.getElementById("myBtn").addEventListener("click", function(){
@@ -302,7 +337,7 @@ var initColInfo = function(colInfo, colTexts) {
 //   --mouseDown;
 // }
 
-printGrid(getCurrentPuzzleLayout());
+debugPrintGrid(getCurrentPuzzleLayout());
 // console.log("curPuzzle1: " + curPuzzle);
 // var invPuzzle = inversePuzzle(curPuzzle);
 // console.log("curPuzzle2: " + curPuzzle);
@@ -310,22 +345,24 @@ printGrid(getCurrentPuzzleLayout());
 
 // var rowTexts = new Array();
 
-var gridNums = getGridPuzzleNums(curPuzzle);
-console.log("gridNums: " + gridNums);
+// console.log("gridNums: " + gridNums);
 // console.log("cTexts: " + getRowTexts(curPuzzle));
-
-var rowNums = gridNums.slice(0, curPuzzle.length);
-var colNums = gridNums.slice(curPuzzle.length, gridNums.length+1);
-
+var gridNums = getGridPuzzleNums(curPuzzle);
+// var rowNums = gridNums.slice(0, curPuzzle.length);
+var rowNums = getGridPuzzleNums(curPuzzle, "rows");
+// var colNums = gridNums.slice(curPuzzle.length, gridNums.length+1);
+var colNums = getGridPuzzleNums(curPuzzle, "cols");
 // colNums = [[1], [2,2], [3], [4], [5]];
-console.log("rowNums: " + rowNums);
-console.log("colNums: " + colNums);
+
+console.log("rowNums: ");
+debugPrintList(rowNums);
+console.log("colNums: ");
+debugPrintList(colNums);
 
 // var extra = document.getElementById("extras");
 // var colInfo = document.getElementById("colInfo");
 // var rowInfo = document.getElementById("rowInfo");
 var grid = document.getElementById("grid");
-
 
 // initRowInfo(grid, rowTexts);
 // initColInfo(colInfo, colTexts);
