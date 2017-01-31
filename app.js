@@ -52,7 +52,7 @@ var getGridPuzzleNums = function(puzzle, side) {
       var r = getNumsFromGivenRow(puzzle[row]);
       // console.log("getTextFromGivenRow(puzzle[row]): " + r);
       gridTexts.push(r);
-      
+
       // gridTexts.push(r);
       // var givenCol = new Array();
       // for (var col = 0; col < puzzle.length; col++) {
@@ -104,12 +104,13 @@ var getNumsFromGivenRow = function(row) {
 }
 
 var getColNumsFromPuzzle = function(puzzle) {
-  
+
   // console.log("row: " + row);
   // console.log("row l: " + row.length);
   // console.log("puzzle[col].length: " + puzzle[col].length);
-  var t = new Array();
+  var tArray = new Array();
   for (var i = 0; i < puzzle.length; i++) {
+    var cArray = new Array();
     var c = 0;
     // console.log("puzzle[" + i + "]: ");
     // console.log(puzzle[i]);
@@ -122,13 +123,14 @@ var getColNumsFromPuzzle = function(puzzle) {
         if (c != null && c != 0) {
           // t += (c + ' ');
           // console.log(" total c " + c);
-          t.push(c);
+          cArray.push(c);
           c = 0;
         }
       }
     }
+    tArray.push(cArray);
   }
-  return t;
+  return tArray;
 }
 
 var debugPrintGrid = function(grid) {
@@ -228,13 +230,13 @@ var initGrid = function(grid, colNums, rowNums) {
       colDiv.addEventListener("click", clickCell);
       // colDiv.addEventListener("mouseenter", clickCell);
       // colDiv.addEventListener("mouseup", clickCell);
-      
+
       rowDiv.appendChild(colDiv);
     }
   }
 }
 
-var initTopRow = function(grid, colNums, rowNums) {
+var initTopRow = function(grid, colNums) {
   var maxColInfos = getMaxLengthFromInfo(colNums);
   console.log("max length: " + maxColInfos);
   for (var i = 0; i < maxColInfos; i++) {
@@ -272,13 +274,13 @@ var initTopRow = function(grid, colNums, rowNums) {
         colDiv.innerHTML = colNums[col][i];
       rowContainerDiv.appendChild(colDiv);
     }
-  } 
+  }
 }
 
 var getMaxLengthFromInfo = function(info) {
   var max = 0;
   for (var i = 0; i < info.length; i++) {
-    if (info[i].length > max) 
+    if (info[i].length > max)
       max = info[i].length;
   }
   return max;
