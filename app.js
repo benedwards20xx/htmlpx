@@ -8,7 +8,7 @@ var puzzle1 = [
   [1,1,1,1,0],
   [0,1,0,1,1],
   [0,0,1,1,0],
-  [1,0,1,1,1]
+  // [1,0,1,1,1]
 ]
 
 var curPuzzle = puzzle1;
@@ -44,11 +44,13 @@ var getCurrentPuzzleLayout = function() {
 var getGridPuzzleNums = function(puzzle, side) {
   // console.log("numCols: " + puzzle.length);
   var gridTexts = new Array();
+  // console.log("DEBUG SIDE: " + side);
+  // console.log("DEBUG PUZZLE.LENGTH: " + puzzle.length);
   if (side == "rows") {
     for (var row = 0; row < puzzle.length; row++) {
       // console.log("curPuzzle[col]: "
       //   + curPuzzle[col]);
-
+      // console.log("PUZZLE[ROW]: " + puzzle[row]);
       var r = getNumsFromGivenRow(puzzle[row]);
       // console.log("getTextFromGivenRow(puzzle[row]): " + r);
       gridTexts.push(r);
@@ -68,7 +70,7 @@ var getGridPuzzleNums = function(puzzle, side) {
     }
   } else if (side == "cols") {
     var colNums = getColNumsFromPuzzle(puzzle);
-    console.log("gotten col nums from puz: " + colNums)
+    // console.log("gotten col nums from puz: " + colNums)
     for (var col = 0; col < colNums.length; col++) {
       gridTexts.push(colNums[col]);
     }
@@ -104,29 +106,52 @@ var getNumsFromGivenRow = function(row) {
 }
 
 var getColNumsFromPuzzle = function(puzzle) {
+  var tArray = new Array();
+  // console.log("test length: " + puzzle.length);
+  // console.log("test length: " + puzzle[0].length);
+  // for (var i = 0; i < puzzle[0].length; i++) {
+  //   for (var j = 0; j < puzzle.length; j++) {
+  //     console.log("DEBUG DEM NUMS FOR COLUMNS i:" + i + " j: " + j + " puz[i][j]: " + puzzle[j][i]);
+  //   }
+  // }
 
   // console.log("row: " + row);
   // console.log("row l: " + row.length);
   // console.log("puzzle[col].length: " + puzzle[col].length);
   var tArray = new Array();
-  for (var i = 0; i < puzzle.length; i++) {
+  for (var i = 0; i <= puzzle[0].length; i++) {
     var cArray = new Array();
     var c = 0;
+
     // console.log("puzzle[" + i + "]: ");
-    // console.log(puzzle[i]);
-    for (var j = 0; j < puzzle[i].length; j++) {
-      // console.log("puzzle[" + j + "][" + i + "]: ");
-      // console.log(puzzle[j][i]);
-      if (puzzle[j][i] == 1) {
-        c++;
-      } else {
-        if (c != null && c != 0) {
-          // t += (c + ' ');
-          // console.log(" total c " + c);
+    // console.log("DEBUG PUZZLE[I]: " + puzzle[i]);
+    // if (puzzle[i] != null && puzzle[i] != undefined) {
+      for (var j = 0; j <= puzzle.length; j++) {
+        // console.log("puzzle[" + j + "][" + i + "]: ");
+        // if (puzzle[j][i] != null && puzzle[j][i] != undefined) {
+          // console.log(puzzle[j][i]);
+          if (puzzle[j] != null || puzzle[j] != undefined) {
+
+          if (puzzle[j][i] == 1) {
+            c++;
+            // if (puzzle[j][i+1] == null || puzzle[j][i+1] == undefined) {
+            //   cArray.push(c);
+            //   c = 0;
+            // }
+          } else {
+            if (c != null && c != 0) {
+              // t += (c + ' ');
+              // console.log(" total c " + c);
+              cArray.push(c);
+              c = 0;
+            }
+          }
+        } else {
           cArray.push(c);
-          c = 0;
+          // c = 0;
         }
-      }
+        // }
+      // }
     }
     tArray.push(cArray);
   }
@@ -258,7 +283,7 @@ var initGrid = function(grid, colNums, rowNums) {
 
 var initTopRow = function(grid, colNums) {
   var maxColInfos = getMaxLengthFromInfo(colNums);
-  console.log("max length: " + maxColInfos);
+  console.log("max col length: " + maxColInfos);
   for (var i = 0; i < maxColInfos; i++) {
     var rowDiv = document.createElement("div");
     // rowDiv.style.border = "solid black 1px";
@@ -369,7 +394,7 @@ debugPrintGrid(getCurrentPuzzleLayout());
 
 // console.log("gridNums: " + gridNums);
 // console.log("cTexts: " + getRowTexts(curPuzzle));
-var gridNums = getGridPuzzleNums(curPuzzle);
+// var gridNums = getGridPuzzleNums(curPuzzle);
 // var rowNums = gridNums.slice(0, curPuzzle.length);
 var rowNums = getGridPuzzleNums(curPuzzle, "rows");
 // var colNums = gridNums.slice(curPuzzle.length, gridNums.length+1);
