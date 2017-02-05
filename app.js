@@ -4,11 +4,11 @@ var numCols = 5;
 var cellDim = 30;
 
 var puzzle1 = [
-  [1,1,0,0,1],
-  [0,1,1,1,0],
-  [0,1,0,1,0],
+  [0,1,0,0,1],
+  [1,1,1,1,0],
+  [0,1,0,1,1],
   [0,0,1,1,0],
-  [0,0,0,0,1]
+  [1,0,1,1,1]
 ]
 
 var curPuzzle = puzzle1;
@@ -213,9 +213,29 @@ var initGrid = function(grid, colNums, rowNums) {
   for (var row = 0; row < numRows; row++) {
     var rowDiv = document.createElement("div");
     // var rowDiv = document.getElementById("inforowdiv" + row);
+    // place row number div in front of row
+    var maxRowInfos = getMaxLengthFromInfo(rowNums);
+    for (var rN = 0; rN < maxRowInfos; rN++) {
+      // console.log("row Num for row " + row + ":" + rowNums[row][rN]);
+      var rowNumsDiv = document.createElement("div");
+      rowNumsDiv.style.width = cellDim + "px";
+      rowNumsDiv.style.height = cellDim + "px";
+      rowNumsDiv.style.background = "#ccc";
+      rowNumsDiv.style.color = "black";
+      rowNumsDiv.style.border = "solid #ccc 1px";
+      rowNumsDiv.style.display = "inline-block";
+      rowNumsDiv.style.textAlign = "center";
+      rowNumsDiv.style.verticalAlign = "bottom";
+      if (rowNums[row][rN])
+        rowNumsDiv.innerHTML = rowNums[row][rN];
+      rowDiv.appendChild(rowNumsDiv);
+    }
     grid.appendChild(rowDiv);
     for (var col = 0; col < numCols; col++) {
-      // console.log("row: " + row + ", col: " + col);
+      // if (colNums[col][i])
+      //   colDiv.innerHTML = colNums[col][i];
+      // rowContainerDiv.appendChild(colDiv);
+
       var colDiv = document.createElement("div");
       colDiv.state = 0;
       colDiv.row = row;
@@ -261,7 +281,7 @@ var initTopRow = function(grid, colNums) {
       colDiv.style.height = cellDim + "px";
       colDiv.style.background = "#ccc";
       colDiv.style.color = "black";
-      // colDiv.style.border = "solid black 1px";
+      colDiv.style.border = "solid #ccc 1px";
       colDiv.style.display = "inline-block";
       colDiv.style.textAlign = "center";
       colDiv.style.verticalAlign = "bottom";
